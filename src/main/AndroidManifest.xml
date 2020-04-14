@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".FindPlaceActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".PersonProfileActivity" />
         <activity android:name=".CommentsActivity" />
         <activity

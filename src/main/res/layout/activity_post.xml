@@ -33,8 +33,9 @@
         android:gravity="start|top"
         android:hint="Your post description"
         android:inputType="textMultiLine"
-        android:padding="15dp"
-        android:textAlignment="center" />
+        android:padding="15dp" />
+    <!--        android:textAlignment="center"-->
+
 
     <EditText
         android:id="@+id/post_destination"
@@ -47,8 +48,7 @@
         android:gravity="start|top"
         android:hint="Your post destination"
         android:inputType="textMultiLine"
-        android:padding="15dp"
-        android:textAlignment="center" />
+        android:padding="15dp" />
 
     <Button
         android:id="@+id/id_update_button"

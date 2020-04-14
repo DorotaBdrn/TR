@@ -51,7 +51,7 @@ public class FindFriendsActivity extends AppCompatActivity {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setTitle("Update Post");
+            supportActionBar.setTitle("Find Friends");
         }
 
         SearchResultList = findViewById(R.id.search_result_list);

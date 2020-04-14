@@ -69,8 +69,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_result_list_places"
-        android:layout_width="388dp"
-        android:layout_height="351dp"
+        android:layout_width="383dp"
+        android:layout_height="562dp"
         android:layout_below="@id/myLayoutPlaces"
         android:layout_alignParentStart="true"
         android:layout_marginStart="14dp"

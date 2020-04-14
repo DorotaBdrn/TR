@@ -20,7 +20,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_add" />
+        app:srcCompat="@drawable/image_add"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/click_post_description"

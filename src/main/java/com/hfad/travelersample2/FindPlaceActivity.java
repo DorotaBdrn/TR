@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,7 +37,7 @@ public class FindPlaceActivity extends AppCompatActivity {
     private EditText SearchInputText;
 
     private RecyclerView SearchResultList;
-    private FirebaseRecyclerAdapter<FindPlace, FindPlacesViewHolder> firebaseRecycleAdapter;
+    private FirebaseRecyclerAdapter<Post, FindPlacesViewHolder> firebaseRecycleAdapter;
 
     private DatabaseReference allUsersDatabaseRef, allPostDatabaseRef;
 
@@ -51,6 +55,7 @@ public class FindPlaceActivity extends AppCompatActivity {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
+            supportActionBar.setDisplayShowHomeEnabled(true);
             supportActionBar.setTitle("Find Places");
         }
 
@@ -76,18 +81,23 @@ public class FindPlaceActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Searching", Toast.LENGTH_SHORT).show();
         Query searchPlacesQuary = allPostDatabaseRef.orderByChild("destination")
-                .startAt(searchBoxInput).endAt(searchBoxInput + "\uf8ff");
+                .startAt(searchBoxInput).endAt(searchBoxInput);//+ "\uf8ff");
 
-        FirebaseRecyclerOptions<FindPlace> findPlaceOptions = new FirebaseRecyclerOptions.Builder<FindPlace>().setQuery(searchPlacesQuary, FindPlace.class).build();
+        FirebaseRecyclerOptions<Post> findPlaceOptions = new FirebaseRecyclerOptions.Builder<Post>().setQuery(searchPlacesQuary, Post.class).build();
 
-        firebaseRecycleAdapter = new FirebaseRecyclerAdapter<FindPlace, FindPlacesViewHolder>(findPlaceOptions) {
+        firebaseRecycleAdapter = new FirebaseRecyclerAdapter<Post, FindPlacesViewHolder>(findPlaceOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull FindPlacesViewHolder holder, int position, FindPlace model) {
+            protected void onBindViewHolder(@NonNull FindPlacesViewHolder holder, int position, Post model) {
                 final String PostKey = getRef(position).getKey();
-                holder.myName.setText(model.getFullname());
-                holder.postDestination.setText(model.getPlaceName());
-                Picasso.get().load(model.getPostImage()).into(holder.postImage);
 
+                holder.username.setText(model.getFullname());
+                holder.time.setText(String.format("%s", model.getTime()));
+                holder.date.setText(String.format("%s", model.getDate()));
+                holder.description.setText(model.getDescription());
+                holder.destination.setText(model.getDestination());
+
+
+                holder.setLikeButtonStatus(PostKey);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -101,12 +111,16 @@ public class FindPlaceActivity extends AppCompatActivity {
                 // TODO: 09.04.2020  dodanie przejscia na postActivity  (visit_post_id)
 
 
+                Picasso.get().load(model.getProfileimage()).into(holder.image);
+                Picasso.get().load(model.getPostimage()).into(holder.postImage);
+
+
             }
 
             @NonNull
             @Override
             public FindPlacesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_places, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_post_layout, parent, false);
                 return new FindPlacesViewHolder(view);
             }
         };
@@ -116,16 +130,62 @@ public class FindPlaceActivity extends AppCompatActivity {
 
 
     private class FindPlacesViewHolder extends RecyclerView.ViewHolder {
+        TextView username, date, time, description, destination;
+        CircleImageView image;
         ImageView postImage;
-        TextView myName, postDestination;
+        ImageButton likePostButton, commentPostButton;
+        TextView displayNoOfLikesButton;
+        int coutLikes;
+        String currentUserId;
+        DatabaseReference LikesRef;
 
-        public FindPlacesViewHolder(View itemView) {
-            super(itemView);
 
-            postImage = itemView.findViewById(R.id.all_users_post_images);
-            myName = itemView.findViewById(R.id.all_users_profile_name);
-            postDestination = itemView.findViewById(R.id.all_users_post_places);
+        public FindPlacesViewHolder(View mView) {
+            super(mView);
+
+            username = mView.findViewById(R.id.post_user_name);
+            date = mView.findViewById(R.id.post_date);
+            time = mView.findViewById(R.id.post_time);
+            description = mView.findViewById(R.id.post_description);
+            destination = mView.findViewById((R.id.post_destination));
+            image = mView.findViewById(R.id.post_profile_image);
+            postImage = mView.findViewById(R.id.post_image);
+
+            likePostButton = mView.findViewById(R.id.like_button);
+            commentPostButton = mView.findViewById(R.id.comment_button);
+            displayNoOfLikesButton = mView.findViewById(R.id.display_no_of_likes);
+
+            LikesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
+            currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         }
+
+        public void setLikeButtonStatus(final String PostKey) {
+            LikesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(PostKey).hasChild(currentUserId)) {
+                        coutLikes = (int) dataSnapshot.child(PostKey).getChildrenCount();
+                        likePostButton.setImageResource(R.drawable.likek_red_24dp);
+                        displayNoOfLikesButton.setText(Integer.toString(coutLikes) + (" Likes"));
+                    } else {
+                        coutLikes = (int) dataSnapshot.child(PostKey).getChildrenCount();
+                        likePostButton.setImageResource(R.drawable.ic_like_black_24dp);
+                        displayNoOfLikesButton.setText(Integer.toString(coutLikes));
+
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
     }
 }
+

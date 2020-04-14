@@ -12,6 +12,10 @@
     <item android:id="@+id/search"
         android:title="Find Friends"
         android:icon="@drawable/ic_search_black_24dp"></item>
+    <item
+        android:id="@+id/searchPlaces"
+        android:title="Find Place"
+        android:icon="@drawable/ic_search_black_24dp"></item>
     <item android:id="@+id/camera"
         android:title="Camera"
         android:icon="@drawable/ic_camera_alt_black_24dp"></item>

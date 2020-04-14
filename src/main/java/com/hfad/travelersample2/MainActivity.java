@@ -174,17 +174,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
                 holder.commentPostButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent commnetsIntent = new Intent(MainActivity.this, CommentsActivity.class);
                         commnetsIntent.putExtra("PostKey", PostKey);//pobranie PostKey przez clickPostActivity
                         startActivity(commnetsIntent);
-
                     }
                 });
-
 
                 holder.likePostButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -204,24 +201,17 @@ public class MainActivity extends AppCompatActivity {
 
                                     }
                                 }
-
-
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
                         });
-
                     }
                 });
 
-
                 Picasso.get().load(model.getProfileimage()).into(holder.image);
                 Picasso.get().load(model.getPostimage()).into(holder.postImage);
-
-
             }
 
             @NonNull
@@ -309,6 +299,10 @@ public class MainActivity extends AppCompatActivity {
                 SendUserToFindFriendsActivity();
                 Toast.makeText(this, "Search", Toast.LENGTH_LONG).show();
                 break;
+            case R.id.searchPlaces:
+                SendUserToFindPlaceActivity();
+                Toast.makeText(this, "Search", Toast.LENGTH_LONG).show();
+                break;
             case R.id.camera:
                 Toast.makeText(this, "Camera", Toast.LENGTH_LONG).show();
                 break;
@@ -325,6 +319,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
         }
+    }
+
+    private void SendUserToFindPlaceActivity() {
+        Intent settingIntent = new Intent(MainActivity.this, FindPlaceActivity.class);
+        startActivity(settingIntent);
     }
 
 

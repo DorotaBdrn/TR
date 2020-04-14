@@ -62,11 +62,13 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_result_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="388dp"
+        android:layout_height="351dp"
         android:layout_below="@+id/myLayout"
         android:layout_alignParentStart="true"
-        android:layout_margin="10dp" />
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp" />
 
 
 </RelativeLayout>
