@@ -206,6 +206,7 @@ public class PostActivity extends AppCompatActivity {
                     postMap.put("counter", countPosts);
                     postMap.put("destination", destination);
 
+
                     referencePosts
                             .child(currentUserId + postRandomName)
                             .updateChildren(postMap)

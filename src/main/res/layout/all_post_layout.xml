@@ -140,9 +140,9 @@
 
             <TextView
                 android:id="@+id/display_no_of_likes"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:text="0 likes"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
@@ -152,7 +152,7 @@
                 android:id="@+id/comment_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="200dp"
+                android:layout_marginLeft="160dp"
                 android:baselineAlignBottom="false"
                 android:src="@drawable/ic_coments_black_24dp" />
 

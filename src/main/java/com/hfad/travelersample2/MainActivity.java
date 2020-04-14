@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -142,9 +143,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void DisplayAllUserPosts() {
 
+        Query SortPostInDescendingOrder = postRef.orderByChild("counter");
+
 
         FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>().
-                setQuery(postRef, Post.class).build();
+                setQuery(SortPostInDescendingOrder, Post.class).build();
         FirebaseRecyclerAdapter<Post, PostViewHolder> adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
 
 //         adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
@@ -392,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         coutLikes = (int) dataSnapshot.child(PostKey).getChildrenCount();
                         likePostButton.setImageResource(R.drawable.ic_like_black_24dp);
-                        displayNoOfLikesButton.setText(Integer.toString(coutLikes));
+                        displayNoOfLikesButton.setText(Integer.toString(coutLikes) + (" Like"));
 
 
                     }
