@@ -96,7 +96,7 @@ public class CommentsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<Comments> options = new FirebaseRecyclerOptions.Builder<Comments>().setQuery(postRef,Comments.class).build();
+        FirebaseRecyclerOptions<Comments> options = new FirebaseRecyclerOptions.Builder<Comments>().setQuery(postRef, Comments.class).build();
 
         FirebaseRecyclerAdapter<Comments, CommentsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Comments, CommentsViewHolder>(options) {
             @Override
@@ -121,14 +121,13 @@ public class CommentsActivity extends AppCompatActivity {
         firebaseRecyclerAdapter.startListening();
     }
 
-    public static class CommentsViewHolder extends RecyclerView.ViewHolder{
+    public static class CommentsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView comment, date,time, username;
-
+        TextView comment, date, time, username;
 
 
         public CommentsViewHolder(@NonNull View mView) {
-            super( mView);
+            super(mView);
 
 
             username = mView.findViewById(R.id.comment_username);
@@ -168,11 +167,10 @@ public class CommentsActivity extends AppCompatActivity {
             postRef.child(RandomKey).updateChildren(commentsMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    
-                    if(task.isSuccessful()){
+
+                    if (task.isSuccessful()) {
                         Toast.makeText(CommentsActivity.this, "Your comment id added successfully", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(CommentsActivity.this, "Error Occcured, try again", Toast.LENGTH_SHORT).show();
                     }
 

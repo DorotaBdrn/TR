@@ -4,7 +4,7 @@ public class Comments {
 
     public String comment, date, time, username;
 
-    public Comments(){
+    public Comments() {
 
     }
 
