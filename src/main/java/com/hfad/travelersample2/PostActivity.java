@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
         });
 
         postDescription = findViewById(R.id.post_description);
-        postDestination  = findViewById(R.id.post_destination);
+        postDestination = findViewById(R.id.post_destination);
 
         loadingBar = new ProgressDialog(this);
         loadingBar.setTitle("Add new Post");
@@ -170,10 +170,10 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     countPosts = dataSnapshot.getChildrenCount();
 
-                }else {
+                } else {
 
                     countPosts = 0;
 
